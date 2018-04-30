@@ -6,12 +6,8 @@ class Grid
     end
   
     def prepare_grid
-      i = 1
-     while i > 0 do
-          @array << Array.new(4, "*")
-          i -= 1
-        end
-      end
+       @array << Array.new(4, "*")
+       end
   
     def pretty_print
         puts "_______________________"
