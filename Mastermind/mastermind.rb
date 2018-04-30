@@ -1,12 +1,12 @@
 
 class Mastermind
 
-# O--> jedan pogodjen i na pravom je mestu
-# P--> jedan pogodjen i nije na pravom mestu
-# X--> nema ga u kombinaciji
+# O--> rigtht place and right symbol
+# P--> wrong place, right symbol
+# X--> wrong symbol
 
 load 'grid.rb'
-#Spisak kombinacija:
+#List od symbols:
 #all=["zvezda","skocko", "karo", "pik","tref","herc"]
 #-----------------------------------------------------------------------
 def initialize(name1)
@@ -93,7 +93,7 @@ def random_color
             $all1 << x
         end
     end
-    puts "My random combination is #{$all1} "
+    #puts "My random combination is #{$all1} "
     return $all1
 end
 #-----------------------------------------------------------------------
@@ -104,18 +104,54 @@ def matching
     $match=[] 
     $check=[]
 
-    $array_comb.each_with_index do |col, position| 
-        
-        if $all1[position] == col then
-           $match << "a"
-           $check << col
-           p $check
-           
-        elsif ($array_comb.include?$all1[position])   then
+    #Caunting matches
+    $i=0
+    #Mutuall symbols
+    $r=[]  
+    #Remaining symbols
+    $t=[]
+    
+    $array_comb.each_with_index do |col,ind|
+        if $all1[ind]==col
+            a= col.split(" ")
+            #p a
+            $r<<col
+            $match << "a"
+            $i+=1
+            puts "Matching symbols #{$i}"
+        else $t << col 
+        end
+    end
+    puts "Common symbols #{$r}"
+    
+    puts "Remaining symbols in t: #{$t}" 
+    
+    $y=[]
+    $all1.each_with_index do |col,ind|
+        if $array_comb[ind]==col
+        else $y << col 
+     end
+    end
+    
+    puts "Remaining symbols in y: #{$y}"
+    
+    if $r.length > 0 then
+        $y.each_with_index do |el, ind|
+            if $t.include?$y[ind] then
+                $match << "b"
+                $t.delete($y[ind])
+                #$y.delete($t[ind])
+    
+             else $match << "c"
+            end
+        end
+    elsif (0..3).each do |x|
+        if $all1.include?$array_comb[x] then
             $match << "b"
-        else $match << "c" 
-       end
-        end 
+        else $match << "c"
+        end
+    end
+    end
     
     
     $match.each do |x|
@@ -128,9 +164,9 @@ def matching
         $c += 1
     end
     end
-    p " Pogodjene na mestu #{$a} "
-    p " Pogodjene ali nisu na mestu #{$b}"
-    p " Nema uopste #{$c} "
+    p " Right place and right symbol #{$a} "
+    p " Wrong place, right symbol #{$b}"
+    p " Wrong symbol #{$c} "
     picture
     return  $a  
     
@@ -184,6 +220,10 @@ end
 end
 
 a=Mastermind.new("Boban")
+
+
+
+
 
 
 
