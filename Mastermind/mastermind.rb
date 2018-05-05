@@ -93,7 +93,7 @@ def random_color
             $all1 << x
         end
     end
-    #puts "My random combination is #{$all1} "
+    puts "My random combination is #{$all1} "
     return $all1
 end
 #-----------------------------------------------------------------------
@@ -135,24 +135,16 @@ def matching
     
     puts "Remaining symbols in y: #{$y}"
     
-    if $r.length > 0 then
+    
         $y.each_with_index do |el, ind|
             if $t.include?$y[ind] then
                 $match << "b"
-                $t.delete($y[ind])
-                #$y.delete($t[ind])
-    
-             else $match << "c"
+                $t.delete_at($t.index($y[ind])) 
+                p $t
+          else $match << "c"
             end
         end
-    elsif (0..3).each do |x|
-        if $all1.include?$array_comb[x] then
-            $match << "b"
-        else $match << "c"
-        end
-    end
-    end
-    
+        
     
     $match.each do |x|
     
@@ -176,6 +168,7 @@ def picture
     if $a==4 then 
         puts "_________\n\n| O | O |\n_________\n\n| O | O |\n_________"
         puts " VICTORY"
+        p $all1
     elsif $a==3 && $b==1 then
         puts "_________\n\n| O | O |\n_________\n\n| O | P |\n_________"
     elsif $a==2 && $b==2 then
@@ -219,7 +212,7 @@ end
 
 end
 
-a=Mastermind.new("Boban")
+a=Mastermind.new("Trifke")
 
 
 
